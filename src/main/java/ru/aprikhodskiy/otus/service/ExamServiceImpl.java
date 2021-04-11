@@ -7,23 +7,24 @@ import ru.aprikhodskiy.otus.domain.Question;
 import ru.aprikhodskiy.otus.domain.Student;
 import ru.aprikhodskiy.otus.exception.ReadQuestionsException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 @Service
 public class ExamServiceImpl implements ExamService {
     private final QuestionDao dao;
+
     int correctAnswersCounter = 0;
 
     private Student student;
+    private final UserInput userInput;
 
     @Value("${pass-rate}")
-    private String passRate;
+    private String passRate = "0";
 
-    public ExamServiceImpl(QuestionDao dao) {
+    public ExamServiceImpl(QuestionDao dao, UserInput userInput) {
         this.dao = dao;
+        this.userInput = userInput;
     }
 
     @Override
@@ -50,9 +51,8 @@ public class ExamServiceImpl implements ExamService {
 
     private void askForName() {
         System.out.println("Enter your name: ");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            this.student = new Student(reader.readLine());
+            this.student = new Student(userInput.getName());
         } catch (IOException e) {
             System.out.println("Sorry. Something went wrong: " + e.getMessage());
         }
@@ -62,9 +62,9 @@ public class ExamServiceImpl implements ExamService {
         System.out.println();
         System.out.println("+++++++++++++++ Question №: " + question.getOrder() + " ++++++++++++++++");
         System.out.println(question.getText());
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         try {
-            String studentAnswer = reader.readLine();
+            String studentAnswer = userInput.getAnswer();
             return studentAnswer.equals(question.getAnswer());
         } catch (IOException e) {
             System.out.println("Sorry. Something went wrong: " + e.getMessage());
