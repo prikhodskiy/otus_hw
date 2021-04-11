@@ -19,7 +19,4 @@ public class QuestionDaoImpl implements QuestionDao {
                 .map(c -> new Question(c.getText(), c.getOrder(), c.getAnswer()))
                 .collect(Collectors.toList());
     }
-
-
-
 }

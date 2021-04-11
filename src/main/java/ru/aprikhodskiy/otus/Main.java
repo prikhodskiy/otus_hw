@@ -1,16 +1,16 @@
 package ru.aprikhodskiy.otus;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 import ru.aprikhodskiy.otus.service.ExamService;
 
 @PropertySource("classpath:application.properties")
-@ComponentScan
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(Main.class);
+        ApplicationContext context = SpringApplication.run(Main.class, args);
         ExamService service = context.getBean(ExamService.class);
         service.runExam();
     }
