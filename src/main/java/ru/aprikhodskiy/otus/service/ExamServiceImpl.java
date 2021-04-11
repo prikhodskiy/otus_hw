@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.aprikhodskiy.otus.dao.QuestionDao;
 import ru.aprikhodskiy.otus.domain.Question;
 import ru.aprikhodskiy.otus.domain.Student;
+import ru.aprikhodskiy.otus.exception.ReadQuestionsException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,9 +28,15 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public List<Question> getAllQuestions() {
-        return dao.findAll();
+        try {
+            return dao.findAll();
+        } catch (ReadQuestionsException e) {
+            System.out.println("Read questions exception:" + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
+    @Override
     public void runExam() {
         askForName();
         for (Question q :

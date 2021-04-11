@@ -1,22 +1,9 @@
 package ru.aprikhodskiy.otus.domain;
 
 public class Question {
-    private String text;
-    private Integer order;
-    private String answer;
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
+    private final String text;
+    private final Integer order;
+    private final String answer;
 
     public String getText() {
         return text;
@@ -30,10 +17,7 @@ public class Question {
         return answer;
     }
 
-    public Question() {
-    }
-
-    public Question(Integer order, String text, String answer) {
+    public Question(String text, Integer order, String answer) {
         this.text = text;
         this.order = order;
         this.answer = answer;
